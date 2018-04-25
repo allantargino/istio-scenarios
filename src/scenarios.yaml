@@ -1,0 +1,59 @@
+---
+ apiVersion: extensions/v1beta1
+ kind: Deployment
+ metadata:
+   name: calculator
+ spec:
+   replicas: 2
+   template:
+     metadata:
+       labels:
+         app: calculator
+     spec:
+       containers:
+         - name: calculator
+           image: allantargino/calculator:latest
+           ports:
+             - containerPort: 5000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: calculator
+spec:
+  selector:
+    app: calculator
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000
+
+---
+ apiVersion: extensions/v1beta1
+ kind: Deployment
+ metadata:
+   name: frontend
+ spec:
+   replicas: 2
+   template:
+     metadata:
+       labels:
+         app: frontend
+     spec:
+       containers:
+         - name: frontend
+           image: allantargino/frontend-calculator:latest
+           ports:
+             - containerPort: 5000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+  - protocol: TCP
+    port: 5001
+    targetPort: 5001
