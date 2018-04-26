@@ -33,11 +33,12 @@ spec:
  metadata:
    name: frontend
  spec:
-   replicas: 2
+   replicas: 1
    template:
      metadata:
        labels:
          app: frontend
+         version: v1
      spec:
        containers:
          - name: frontend
@@ -49,13 +50,11 @@ kind: Service
 apiVersion: v1
 metadata:
   name: frontend
-  labels:
-    app: frontend
 spec:
   selector:
     app: frontend
   ports:
-  - port: 5001
+  - port: 80
     targetPort: 5001
     name: http
 ---
@@ -72,5 +71,5 @@ spec:
       - path: /.*
         backend:
           serviceName: frontend
-          servicePort: 5001
+          servicePort: 80
 ---
