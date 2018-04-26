@@ -68,7 +68,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /.*
+      - path: /frontend/.*
         backend:
           serviceName: frontend
           servicePort: 80
