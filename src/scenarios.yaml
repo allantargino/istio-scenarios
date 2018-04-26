@@ -9,6 +9,7 @@
      metadata:
        labels:
          app: calculator
+         version: v1
      spec:
        containers:
          - name: calculator
@@ -31,7 +32,7 @@ spec:
  apiVersion: extensions/v1beta1
  kind: Deployment
  metadata:
-   name: frontend
+   name: frontend-v1
  spec:
    replicas: 1
    template:
@@ -42,7 +43,25 @@ spec:
      spec:
        containers:
          - name: frontend
-           image: allantargino/frontend-calculator:latest
+           image: allantargino/frontend-calculator:v1
+           ports:
+             - containerPort: 5001
+---
+ apiVersion: extensions/v1beta1
+ kind: Deployment
+ metadata:
+   name: frontend-v2
+ spec:
+   replicas: 1
+   template:
+     metadata:
+       labels:
+         app: frontend
+         version: v2
+     spec:
+       containers:
+         - name: frontend
+           image: allantargino/frontend-calculator:v2
            ports:
              - containerPort: 5001
 ---

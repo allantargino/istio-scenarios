@@ -17,4 +17,23 @@ spec:
   route:
   - labels:
       version: v1
+    weight: 50
+  - labels:
+      version: v2
+    weight: 50
 ---
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: calculator-default
+spec:
+  destination:
+    name: calculator
+  precedence: 1
+  httpFault:
+    abort:
+      httpStatus: 500
+      percent: 20
+  route:
+  - labels:
+      version: v1
